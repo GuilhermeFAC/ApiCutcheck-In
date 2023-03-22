@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBarberRequest;
+use App\Http\Resources\BarbersResource;
+use App\Models\Barber;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class BarbersController extends Controller
 {
@@ -14,15 +18,7 @@ class BarbersController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return BarbersResource::collection(Barber::all());
     }
 
     /**
@@ -36,25 +32,25 @@ class BarbersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Barber $barber)
     {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return new BarbersResource($barber);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreBarberRequest  $request, Barber $barber)
     {
-        //
+        $request->validated($request->all());
+
+        $barber->update($request->all());
+
+        if ($request->password) {
+            $barber['password'] = Hash::make($request->password);
+        }
+        return new BarbersResource($barber);
     }
 
     /**

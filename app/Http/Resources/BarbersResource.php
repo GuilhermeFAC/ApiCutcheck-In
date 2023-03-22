@@ -14,16 +14,21 @@ class BarbersResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return[
+        return [
             'id' => (string)$this->id,
             'atributes' => [
                 'name' => $this->name,
-                'description' => $this->description,
-                'priority' => $this->priority,
+                'email' => $this->email,
+                'endereco' => $this->endereco,
+                'cidade' => $this->cidade,
+                'estado' => $this->estado,
+                'telefone' => $this->telefone,
+                'type_user' => $this->type_user,
+                'avatar' => $this->avatar,
+                'stars' => $this->stars,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ],
         ];
-
     }
 }

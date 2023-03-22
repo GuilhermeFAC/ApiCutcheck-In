@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class StoreBarberRequest extends FormRequest
@@ -22,7 +23,7 @@ class StoreBarberRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['required', 'max:255', 'min:6'],
             'email' => ['required', 'unique:barbers', 'email', 'max:255'],
             'password' => ['required', 'confirmed', Password::defaults()],
@@ -34,5 +35,19 @@ class StoreBarberRequest extends FormRequest
             'avatar' => ['nullable', 'max:255', 'string'],
             'stars' => ['numeric']
         ];
+
+        if ($this->method() === 'PATCH') {
+            $rules['name'] = ['nullable', 'max:255', 'min:6'];
+            $rules['email'] = ["unique:barbers,email,{$this->id}", 'email', 'max:255'];
+            $rules['password'] = ['nullable', Password::defaults()];
+            $rules['endereco'] = ['nullable', 'max:255', 'string'];
+            $rules['cidade'] = ['nullable', 'max:255', 'string'];
+            $rules['estado'] = ['nullable', 'max:2', 'min:2', 'string'];
+            $rules['telefone'] = ['nullable', 'max:11', 'string'];
+            $rules['type_user'] = ['nullable', 'max:255', 'string'];
+            $rules['avatar'] = ['nullable', 'max:255', 'string'];
+            $rules['stars'] = ['nullable', 'numeric'];
+        }
+        return $rules;
     }
 }
