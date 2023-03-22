@@ -5,8 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-
-class StoreUserRequest extends FormRequest
+class StoreBarberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +24,15 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255', 'min:6'],
-            'email' => ['required', 'unique:users', 'email', 'max:255'],
+            'email' => ['required', 'unique:barbers', 'email', 'max:255'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'endereco' => ['required', 'max:255', 'string'],
             'cidade' => ['required', 'max:255', 'string'],
-            'estado'=>['required','max:2','min:2','string'],
-            'telefone'=>['required','max:11','string'],
-            'type_user'=>['required','max:255','string'],
-            'avatar'=>['nullable','max:255','string'],
+            'estado' => ['required', 'max:2', 'min:2', 'string'],
+            'telefone' => ['required', 'max:11', 'string'],
+            'type_user' => ['required', 'max:255', 'string'],
+            'avatar' => ['nullable', 'max:255', 'string'],
+            'stars' => ['numeric']
         ];
     }
 }

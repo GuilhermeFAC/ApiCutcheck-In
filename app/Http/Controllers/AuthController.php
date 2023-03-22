@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Barber;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
@@ -31,18 +32,60 @@ class AuthController extends Controller
         ]);
     }
 
+    public function loginBarber(LoginUserRequest $request)
+    {
+        $request->validated($request->all());
+
+        $barber = Barber::where('email', $request->email)->first();
+
+        if (!$barber || !Hash::check($request->password, $barber->password)) {
+
+            return $this->error('', 'Credentials do not match', 401);
+        }
+
+        return $this->sucess([
+            'user' => $barber,
+            'token' => $barber->createToken('API Token of barber' . $barber->name)->plainTextToken
+        ]);
+    }
+
     public function registerUser(StoreUserRequest $request)
     {
         $request->validated($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'endereco' => $request->endereco,
+            'cidade' => $request->cidade,
+            'estado' => $request->estado,
+            'telefone' => $request->telefone,
+            'type_user' => $request->type_user,
         ]);
 
         return $this->sucess([
             'user' => $user,
             'token' => $user->createToken('API Token of ' . $user->name)->plainTextToken
+        ]);
+    }
+
+    public function registerBarber(StoreUserRequest $request)
+    {
+        $request->validated($request->all());
+        $barber = Barber::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'endereco' => $request->endereco,
+            'cidade' => $request->cidade,
+            'estado' => $request->estado,
+            'telefone' => $request->telefone,
+            'type_user' => $request->type_user,
+        ]);
+
+        return $this->sucess([
+            'user' => $barber,
+            'token' => $barber->createToken('API Token of ' . $barber->name)->plainTextToken
         ]);
     }
 

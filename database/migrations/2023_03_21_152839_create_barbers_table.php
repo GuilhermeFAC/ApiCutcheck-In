@@ -17,12 +17,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('endereço');
+            $table->string('endereco');
             $table->string('cidade');
             $table->string('estado');
             $table->string('telefone');
             $table->string('type_user');
             $table->string('avatar')->default('defaultbarbers.png');
+            $table->float('stars')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
