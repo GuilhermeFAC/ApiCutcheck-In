@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    public function login(LoginUserRequest $request)
+    public function loginUser(LoginUserRequest $request)
     {
         $request->validated($request->all());
 
@@ -31,7 +31,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(StoreUserRequest $request)
+    public function registerUser(StoreUserRequest $request)
     {
         $request->validated($request->all());
         $user = User::create([
