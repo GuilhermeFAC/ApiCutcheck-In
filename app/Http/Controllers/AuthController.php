@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    public function loginUser(LoginUserRequest $request)
+    public function login(LoginUserRequest $request)
     {
         $request->validated($request->all());
 
@@ -40,7 +40,7 @@ class AuthController extends Controller
         return $this->error('', 'Credentials do not match', 401);
     }
 
-    public function registerUser(StoreUserRequest $request)
+    public function register(StoreUserRequest $request)
     {
 
         if ($request->type_user === 'cliente') {
