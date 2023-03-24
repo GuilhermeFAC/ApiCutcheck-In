@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBarberRequest;
 use App\Http\Resources\BarbersResource;
 use App\Models\Barber;
+use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class BarbersController extends Controller
@@ -34,7 +36,9 @@ class BarbersController extends Controller
      */
     public function show(Barber $barber)
     {
-
+        if (Auth::user()->id !== $barber->id) {
+            return $this->error('', 'You are not authorized to make this request', 403);
+        }
         return new BarbersResource($barber);
     }
 
@@ -43,14 +47,18 @@ class BarbersController extends Controller
      */
     public function update(StoreBarberRequest  $request, Barber $barber)
     {
-        $request->validated($request->all());
+        $user = User::where('email', $request->email)->count();
+        if ($user === 0) {
+            $request->validated($request->all());
 
-        $barber->update($request->all());
+            $barber->update($request->all());
 
-        if ($request->password) {
-            $barber['password'] = Hash::make($request->password);
+            if ($request->password) {
+                $barber['password'] = Hash::make($request->password);
+            }
+            return new BarbersResource($barber);
         }
-        return new BarbersResource($barber);
+        return $this->error('', 'O campo email já está sendo utilizado.', 422);
     }
 
     /**

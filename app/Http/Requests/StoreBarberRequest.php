@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Barber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -26,7 +25,7 @@ class StoreBarberRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'max:255', 'min:6'],
-            'email' => ['required', 'unique:barbers', 'email', 'max:255'],
+            'email' => ['required', 'unique:barbers', 'unique:users', 'email', 'max:255'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'endereco' => ['required', 'max:255', 'string'],
             'cidade' => ['required', 'max:255', 'string'],
@@ -39,7 +38,7 @@ class StoreBarberRequest extends FormRequest
 
         if ($this->method() === 'PATCH') {
             $rules['name'] = ['nullable', 'max:255', 'min:6'];
-            $rules['email'] = [Rule::unique('barbers')->ignore($this->barber->id), 'email', 'max:255'];
+            $rules['email'] = [Rule::unique('barbers')->ignore($this->barber), 'email', 'max:255'];
             $rules['password'] = ['nullable', Password::defaults()];
             $rules['endereco'] = ['nullable', 'max:255', 'string'];
             $rules['cidade'] = ['nullable', 'max:255', 'string'];

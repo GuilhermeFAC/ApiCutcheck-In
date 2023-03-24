@@ -22,7 +22,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         $barber = Barber::where('email', $request->email)->first();
 
-        if ($user || Hash::check($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
 
             return $this->sucess([
                 'user' => $user,
@@ -30,7 +30,7 @@ class AuthController extends Controller
             ]);
         }
 
-        if ($barber || Hash::check($request->password, $barber->password)) {
+        if ($barber && Hash::check($request->password, $barber->password)) {
             return $this->sucess([
                 'barber' => $barber,
                 'token' => $barber->createToken('API Token of ' . $barber->name)->plainTextToken
@@ -42,7 +42,7 @@ class AuthController extends Controller
 
     public function registerUser(StoreUserRequest $request)
     {
-        
+
         if ($request->type_user === 'cliente') {
             $request->validated($request->all());
             $user = User::create([

@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-
 class StoreUserRequest extends FormRequest
 {
     /**
@@ -36,20 +35,9 @@ class StoreUserRequest extends FormRequest
             'avatar' => ['nullable', 'max:255', 'string'],
         ];
 
-        if ($this->type_user !== 'cliente') {
-            $rules['name'] = ['required', 'max:255', 'min:6'];
-            $rules['email'] = ['required', 'unique:barbers', 'unique:users', 'email', 'max:255'];
-            $rules['password'] = ['required', 'confirmed', Password::defaults()];
-            $rules['endereco'] = ['required', 'max:255', 'string'];
-            $rules['cidade'] = ['required', 'max:255', 'string'];
-            $rules['estado'] = ['required', 'max:2', 'min:2', 'string'];
-            $rules['telefone'] = ['required', 'max:11', 'string'];
-            $rules['type_user'] = ['required', 'max:255', 'string'];
-        };
-
         if ($this->method() === 'PATCH') {
             $rules['name'] = ['nullable', 'max:255', 'min:6'];
-            $rules['email'] = [Rule::unique('users')->ignore($this->user->id), 'email', 'max:255'];
+            $rules['email'] = ["unique:users,email,{$this->user->id}", 'email', 'max:255'];
             $rules['password'] = ['nullable', Password::defaults()];
             $rules['endereco'] = ['nullable', 'max:255', 'string'];
             $rules['cidade'] = ['nullable', 'max:255', 'string'];
