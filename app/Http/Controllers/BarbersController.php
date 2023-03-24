@@ -36,9 +36,6 @@ class BarbersController extends Controller
      */
     public function show(Barber $barber)
     {
-        if (Auth::user()->id !== $barber->id) {
-            return $this->error('', 'You are not authorized to make this request', 403);
-        }
         return new BarbersResource($barber);
     }
 

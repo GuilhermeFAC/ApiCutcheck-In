@@ -36,9 +36,6 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        if (Auth::user()->id !== $user->id) {
-            return $this->error('', 'You are not authorized to make this request', 403);
-        }
         return new UsersResource($user);
     }
 
