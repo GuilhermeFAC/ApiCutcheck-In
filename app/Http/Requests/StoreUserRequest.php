@@ -37,7 +37,7 @@ class StoreUserRequest extends FormRequest
 
         if ($this->method() === 'PATCH') {
             $rules['name'] = ['nullable', 'max:255', 'min:6'];
-            $rules['email'] = ["unique:users,email,{$this->user->id}", 'email', 'max:255'];
+            $rules['email'] = ["unique:users,email,{$this->user}", 'email', 'max:255'];
             $rules['password'] = ['nullable', Password::defaults()];
             $rules['endereco'] = ['nullable', 'max:255', 'string'];
             $rules['cidade'] = ['nullable', 'max:255', 'string'];

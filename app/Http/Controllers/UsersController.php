@@ -52,6 +52,9 @@ class UsersController extends Controller
             if ($request->password) {
                 $user['password'] = Hash::make($request->password);
             }
+            if ($request->avatar) {
+                $user['avatar'] =  url('media/avatars/' . $request->avatar);
+            }
             return new UsersResource($user);
         }
         return $this->error('', 'O campo email já está sendo utilizado.', 422);

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Barber;
+use App\Models\BarberAvailability;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
@@ -72,8 +73,34 @@ class AuthController extends Controller
                     'telefone' => $request->telefone,
                     'type_user' => $request->type_user,
                 ]);
+
+                $daysOfWeek = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
+                foreach ($daysOfWeek as $day) {
+                    $startTime = strtotime($day . ' 08:00'); // Converte a hora inicial para um formato de data/hora
+                    $endTime = strtotime($day . ' 22:00'); // Converte a hora final para um formato de data/hora
+
+                    $current = $startTime; // Define o horário atual como o horário inicial
+
+                    while ($current <= $endTime) {
+                        $formattedTime = date('H:i', $current); // Formata o horário atual como HH:MM
+
+                        // Armazenar no banco de dados
+                        $horario = BarberAvailability::create([
+                            'barber_id' => $barber->id,
+                            'weekday' => $day,
+                            'hours' => $formattedTime,
+                        ]);
+
+
+                        $current = strtotime('+30 minutes', $current); // Adiciona 30 minutos ao horário atual
+
+                    }
+                }
+
                 return $this->sucess([
                     'user' => $barber,
+                    'horario' => true,
                     'token' => $barber->createToken('API Token of ' . $barber->name)->plainTextToken
                 ]);
             }
