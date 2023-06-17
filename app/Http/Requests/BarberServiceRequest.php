@@ -23,12 +23,13 @@ class BarberServiceRequest extends FormRequest
     {
         $rules = [
             'barber_id' => ['required', 'numeric'],
-            'name' => ['required', 'string', 'max:255','min:6'],
+            'name' => ['required', 'string', 'max:255', 'min:6'],
             'price' => ['required', 'numeric'],
         ];
 
         if ($this->method() === 'PATCH') {
-            $rules['name'] = ['string', 'max:255','min:6'];
+            $rules['barber_id'] = ['nullable'];
+            $rules['name'] = ['string', 'max:255', 'min:6'];
             $rules['price'] = ['numeric'];
         }
         return $rules;

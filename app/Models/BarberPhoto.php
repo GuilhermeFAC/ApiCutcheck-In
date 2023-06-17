@@ -13,4 +13,9 @@ class BarberPhoto extends Model
         'barber_id',
         'url',
     ];
+
+    public function barber()
+    {
+        return $this->belongsTo(Barber::class);
+    }
 }

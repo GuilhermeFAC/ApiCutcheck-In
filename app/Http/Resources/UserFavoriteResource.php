@@ -2,11 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Models\UserFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use PhpParser\Node\Expr\FuncCall;
+use Illuminate\Support\Facades\Auth;
 
-class BarberPhotosResource extends JsonResource
+class UserFavoriteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +20,7 @@ class BarberPhotosResource extends JsonResource
             'id' => (string)$this->id,
             'attributes' => [
                 'barber_id' => $this->barber_id,
-                'url' => $this->url,
+                'user_id' => $this->user_id,
             ]
         ];
     }

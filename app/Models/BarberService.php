@@ -14,4 +14,9 @@ class BarberService extends Model
         'name',
         'price',
     ];
+
+    public function barber()
+    {
+        return $this->belongsTo(Barber::class);
+    }
 }

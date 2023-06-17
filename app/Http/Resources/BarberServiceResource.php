@@ -16,7 +16,7 @@ class BarberServiceResource extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'atributes' => [
+            'attributes' => [
                 'barber_id' => $this->barber_id,
                 'name' => $this->name,
                 'price' => $this->price

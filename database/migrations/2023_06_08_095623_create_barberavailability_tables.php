@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('barber_id')->references('id')->on('barbers')->onDelete('cascade');
             $table->string('weekday');
             $table->string('hours');
-            $table->boolean('active')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

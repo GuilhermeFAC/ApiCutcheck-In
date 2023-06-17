@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
+use App\Models\BarberAvailability;
+use App\Models\UserAppointment;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BarberAvailabilityResource extends JsonResource
@@ -12,16 +14,16 @@ class BarberAvailabilityResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
         return [
-            'id' => (string)$this->id,
-            'atributes' => [
+            'id' => (string) $this->id,
+            'attributes' => [
                 'barber_id' => $this->barber_id,
                 'weekday' => $this->weekday,
-                'hours' => $this->hours,
                 'active' => $this->active,
             ],
         ];
+
     }
 }

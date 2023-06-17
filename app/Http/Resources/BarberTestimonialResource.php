@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use PhpParser\Node\Expr\FuncCall;
 
-class BarberPhotosResource extends JsonResource
+class BarberTestimonialResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +18,9 @@ class BarberPhotosResource extends JsonResource
             'id' => (string)$this->id,
             'attributes' => [
                 'barber_id' => $this->barber_id,
-                'url' => $this->url,
+                'name' => $this->name,
+                'rate' => $this->rate,
+                'body' => $this->body
             ]
         ];
     }

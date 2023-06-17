@@ -26,8 +26,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('/barbers/availability/{availabilityId}', [BarbersController::class, 'updateAvailability']);
     Route::get('/barbers/{barber}/availability', [BarbersController::class, 'getAvailabilities']);
     Route::post('/barbers/services', [BarbersController::class, 'addServices']);
-
-    //Route::get('/barbers/search', BarbersController::class, 'search');
+    Route::get('/barbers/{barber}/services', [BarbersController::class, 'getServices']);
+    Route::patch('/barbers/services/{serviceId}', [BarbersController::class, 'updateService']);
+    Route::delete('/barbers/services/{serviceId}', [BarbersController::class, 'destroyaService']);
+    Route::post('/barbers/{barber}/appointments', [BarbersController::class, 'setAppointments']);
+    Route::get('/barbers/search', [BarbersController::class, 'search']);
 
     Route::apiResource('/users', UsersController::class);
     Route::get('/users/favorites', [UsersController::class, 'getFavorites']);

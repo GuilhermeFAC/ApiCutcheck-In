@@ -15,4 +15,9 @@ class BarberTestimonial extends Model
         'rate',
         'body',
     ];
+
+    public function barber()
+    {
+        return $this->belongsTo(Barber::class);
+    }
 }

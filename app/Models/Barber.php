@@ -47,4 +47,24 @@ class Barber extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function barberavailability()
+    {
+        return $this->hasMany(BarberAvailability::class);
+    }
+
+    public function barberphotos()
+    {
+        return $this->hasMany(BarberPhoto::class);
+    }
+
+    public function barbertestimonial()
+    {
+        return $this->hasMany(BarberTestimonial::class);
+    }
+
+    public function barberservice()
+    {
+        return $this->hasMany(BarberService::class);
+    }
 }

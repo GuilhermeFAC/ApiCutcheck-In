@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BarberAvailabilityRequest extends FormRequest
+class UserFavoriteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,11 +21,8 @@ class BarberAvailabilityRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'active' => ['required', 'boolean'],
-            'hours' => ['nullable', 'string'],
+        return [
+            'barber_id' => ['required', 'numeric'],
         ];
-
-        return $rules;
     }
 }

@@ -16,7 +16,7 @@ class UsersResource extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'atributes' => [
+            'attributes' => [
                 'name' => $this->name,
                 'email' => $this->email,
                 'endereco' => $this->endereco,
@@ -29,6 +29,6 @@ class UsersResource extends JsonResource
                 'updated_at' => $this->updated_at,
             ],
         ];
-        
+
     }
 }

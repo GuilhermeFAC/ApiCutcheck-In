@@ -22,7 +22,6 @@ class TaskFactory extends Factory
             'name' => $this->faker->unique()->sentence(),
             'description' => $this->faker->text(),
             'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
-
         ];
     }
 }

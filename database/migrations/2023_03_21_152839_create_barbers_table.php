@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('estado');
             $table->string('telefone');
             $table->string('type_user');
-            $table->string('avatar')->default(url('media/avatars/defaultbarbers.png'));
+            $table->string('avatar')->default('http://169.46.123.222/media/avatars/defaultbarbers.png');
             $table->float('stars')->default(0);
             $table->rememberToken();
             $table->timestamps();

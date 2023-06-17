@@ -74,26 +74,34 @@ class AuthController extends Controller
                     'type_user' => $request->type_user,
                 ]);
 
-                $daysOfWeek = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                // Obtém os dias da semana
+                $diasDaSemana = ['0', '1', '2', '3', '4', '5', '6'];
 
-                foreach ($daysOfWeek as $day) {
-                    $startTime = strtotime($day . ' 08:00'); // Converte a hora inicial para um formato de data/hora
-                    $endTime = strtotime($day . ' 22:00'); // Converte a hora final para um formato de data/hora
+                // Define a hora inicial e a hora final
+                $horaInicial = strtotime('08:00');
+                $horaFinal = strtotime('22:00');
 
-                    $current = $startTime; // Define o horário atual como o horário inicial
+                // Percorre cada dia da semana
+                foreach ($diasDaSemana as $day) {
 
-                    while ($current <= $endTime) {
-                        $formattedTime = date('H:i', $current); // Formata o horário atual como HH:MM
+                $horarios=[];
+                $horaAtual = $horaInicial;
+
+                   // Incrementa de 30 em 30 minutos
+                    while ($horaAtual <= $horaFinal) {
+                        $horarios[] = date('H:i', $horaAtual);
+                        $horaAtual = strtotime('+30 minutes', $horaAtual);
+                    }
+
+                    // Concatena os horários separados por vírgula
+                    $horariosString = implode(',', $horarios);
 
                         // Armazenar no banco de dados
+
                         $horario = BarberAvailability::create([
                             'barber_id' => $barber->id,
                             'weekday' => $day,
-                            'hours' => $formattedTime,
-                        ]);
-
-
-                        $current = strtotime('+30 minutes', $current); // Adiciona 30 minutos ao horário atual
+                            'hours' => $horariosString,]);
 
                     }
                 }
@@ -105,7 +113,7 @@ class AuthController extends Controller
                 ]);
             }
         }
-    }
+
 
     public function logout()
     {

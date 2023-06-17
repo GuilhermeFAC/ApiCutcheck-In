@@ -15,4 +15,14 @@ class BarberAvailability extends Model
         'hours',
         'active'
     ];
+
+    public function barber()
+    {
+        return $this->belongsTo(Barber::class);
+    }
+
+    public function userappointments()
+    {
+        return $this->hasMany(UserAppointment::class, 'barber_id', 'barber_id');
+    }
 }
