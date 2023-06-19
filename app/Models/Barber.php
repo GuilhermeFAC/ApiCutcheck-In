@@ -72,4 +72,9 @@ class Barber extends Model
     {
         return $this->hasMany(UserAppointment::class);
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(UserFavorite::class, 'barber_id');
+    }
 }

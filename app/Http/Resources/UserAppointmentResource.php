@@ -14,13 +14,32 @@ class UserAppointmentResource extends JsonResource
     public function toArray($request)
     {
         if ($request->route()->getName() === 'users.getAppointments') {
-            return [
+            $typeUser = $this->barber->type_user;
+
+            $data = [
                 'id' => $this->id,
-                'user' => new UsersResource($this->whenLoaded('user')),
+                'user' => null, // Definimos como nulo inicialmente, preencheremos de acordo com o tipo de usuário
                 'service' => new BarberServiceResource($this->whenLoaded('barberService')),
-                // Outros campos do UserAppointment que você deseja retornar
                 'datetime' => $this->ap_datetime,
             ];
+
+            if ($typeUser === 'barbearia') {
+                $data['user'] = [
+                    'name' => $this->user->name,
+                    'avatar' => $this->user->avatar,
+                    'telefone' => $this->user->telefone,
+                ];
+            } elseif ($typeUser === 'barbeiro') {
+                $data['user'] = [
+                    'name' => $this->user->name,
+                    'avatar' => $this->user->avatar,
+                    'endereco' => $this->user->endereco,
+                    'cidade' => $this->user->cidade,
+                    'telefone' => $this->user->telefone,
+                ];
+            }
+
+            return $data;
         } else {
             return [
                 'id' => $this->id,

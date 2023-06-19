@@ -13,4 +13,13 @@ class UserFavorite extends Model
         'user_id',
         'barber_id',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function barber()
+    {
+        return $this->belongsTo(Barber::class, 'barber_id');
+    }
 }

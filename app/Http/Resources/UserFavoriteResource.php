@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\UserFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
+
 
 class UserFavoriteResource extends JsonResource
 {
@@ -18,10 +17,7 @@ class UserFavoriteResource extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'attributes' => [
-                'barber_id' => $this->barber_id,
-                'user_id' => $this->user_id,
-            ]
+            'barber' => new BarbersResource($this->whenLoaded('barber')),
         ];
     }
 }

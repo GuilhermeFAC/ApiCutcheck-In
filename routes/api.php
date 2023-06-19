@@ -22,18 +22,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('/barbers', BarbersController::class);
-    Route::patch('/barbers/availability/{availabilityId}', [BarbersController::class, 'updateAvailability']);
-    Route::get('/barbers/{barber}/availability', [BarbersController::class, 'getAvailabilities']);
-    Route::post('/barbers/services', [BarbersController::class, 'addServices']);
-    Route::get('/barbers/{barber}/services', [BarbersController::class, 'getServices']);
-    Route::patch('/barbers/services/{serviceId}', [BarbersController::class, 'updateService']);
-    Route::delete('/barbers/services/{serviceId}', [BarbersController::class, 'destroyaService']);
-    Route::post('/barbers/{barber}/appointments', [BarbersController::class, 'setAppointments']);
-    Route::get('/barbers/{barber}/appointments', [BarbersController::class, 'getAppointmentsBarbers'])->name('users.getAppointments');
+    Route::patch('/barbers/availability/{availabilityId}', [BarbersController::class, 'updateAvailability']); //ok
+    Route::get('/barbers/{barber}/availability', [BarbersController::class, 'getAvailabilities']); //ok
+    Route::post('/barbers/services', [BarbersController::class, 'addServices']); //ok
+    Route::get('/barbers/{barber}/services', [BarbersController::class, 'getServices']); //ok
+    Route::patch('/barbers/services/{serviceId}', [BarbersController::class, 'updateService']); //ok
+    Route::delete('/barbers/services/{serviceId}', [BarbersController::class, 'destroyaService']); //ok
+    Route::post('/barbers/{barber}/appointments', [BarbersController::class, 'setAppointments']); //ok
+    Route::get('/barbers/{barber}/appointments', [BarbersController::class, 'getAppointmentsBarbers'])->name('users.getAppointments'); //ok
     Route::get('/barbers/search', [BarbersController::class, 'search']);
 
     Route::apiResource('/users', UsersController::class);
-    Route::get('/users/favorites', [UsersController::class, 'getFavorites']);
-    Route::post('/users/favorite', [UsersController::class, 'addFavorite']);
-    Route::get('/users/{user}/appointments', [UsersController::class, 'getAppointments']);
+    Route::get('/users/{user}/favorites', [UsersController::class, 'getFavorites']); //ok
+    Route::post('/users/favorite', [UsersController::class, 'addFavorite']); //ok
+    Route::get('/users/{user}/appointments', [UsersController::class, 'getAppointments']); //ok
 });

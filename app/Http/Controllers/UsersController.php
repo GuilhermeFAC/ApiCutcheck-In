@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserFavoriteRequest;
 use App\Http\Resources\UserAppointmentResource;
+use App\Http\Resources\UserFavoriteResource;
 use App\Http\Resources\UsersResource;
 use App\Models\Barber;
 use App\Models\User;
@@ -82,12 +83,14 @@ class UsersController extends Controller
             // O registro já existe, então remova-o
             $existingFavorite->delete();
             // Retorne uma resposta adequada, se necessário
+            return ['message' => 'Retirado dos favoritos'];
         } else {
             // O registro não existe, então crie um novo registro
             UserFavorite::create([
                 'user_id' => $userId,
                 'barber_id' => $barberId,
             ]);
+            return ['message' => 'Adicionado aos favoritos'];
             // Retorne uma resposta adequada, se necessário
         }
     }
@@ -100,6 +103,16 @@ class UsersController extends Controller
             ->get();
 
         return UserAppointmentResource::collection($appointments);
+    }
+
+    public function getFavorites($user)
+    {
+
+        $favorites = UserFavorite::with('barber')
+            ->where('user_id', $user)
+            ->get();
+
+        return UserFavoriteResource::collection($favorites);
     }
 
     /**
