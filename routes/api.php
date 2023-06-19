@@ -20,7 +20,6 @@ Route::post('/register', [AuthController::class, 'register']);
 //Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/tasks', TasksController::class);
 
     Route::apiResource('/barbers', BarbersController::class);
     Route::patch('/barbers/availability/{availabilityId}', [BarbersController::class, 'updateAvailability']);
@@ -30,10 +29,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('/barbers/services/{serviceId}', [BarbersController::class, 'updateService']);
     Route::delete('/barbers/services/{serviceId}', [BarbersController::class, 'destroyaService']);
     Route::post('/barbers/{barber}/appointments', [BarbersController::class, 'setAppointments']);
+    Route::get('/barbers/{barber}/appointments', [BarbersController::class, 'getAppointmentsBarbers'])->name('users.getAppointments');
     Route::get('/barbers/search', [BarbersController::class, 'search']);
 
     Route::apiResource('/users', UsersController::class);
     Route::get('/users/favorites', [UsersController::class, 'getFavorites']);
     Route::post('/users/favorite', [UsersController::class, 'addFavorite']);
-    Route::get('/users/appointments', [UsersController::class, 'getAppointments']);
+    Route::get('/users/{user}/appointments', [UsersController::class, 'getAppointments']);
 });

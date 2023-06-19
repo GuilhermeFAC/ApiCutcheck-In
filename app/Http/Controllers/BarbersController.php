@@ -10,6 +10,7 @@ use App\Http\Requests\UserAppointmentRequest;
 use App\Http\Resources\BarberAvailabilityResource;
 use App\Http\Resources\BarberServiceResource;
 use App\Http\Resources\BarbersResource;
+use App\Http\Resources\UserAppointmentResource;
 use App\Models\Barber;
 use App\Models\BarberAvailability;
 use App\Models\BarberService;
@@ -133,6 +134,16 @@ class BarbersController extends Controller
         return $this->sucess([
             'message' => 'Check-in realizado com sucesso',
         ]);
+    }
+
+    public function getAppointmentsBarbers($barber)
+    {
+
+        $appointments = UserAppointment::with('barberService', 'user')
+            ->where('barber_id', $barber)
+            ->get();
+
+        return UserAppointmentResource::collection($appointments);
     }
 
     /**

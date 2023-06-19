@@ -48,4 +48,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function appointments()
+    {
+        return $this->hasMany(UserAppointment::class, 'user_id');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(UserFavorite::class, 'user_id');
+    }
 }

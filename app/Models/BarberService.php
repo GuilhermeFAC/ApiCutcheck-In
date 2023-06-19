@@ -19,4 +19,9 @@ class BarberService extends Model
     {
         return $this->belongsTo(Barber::class);
     }
+
+    public function userappointments()
+    {
+        return $this->hasMany(UserAppointment::class, 'service_id');
+    }
 }

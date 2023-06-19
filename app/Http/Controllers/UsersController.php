@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserFavoriteRequest;
+use App\Http\Resources\UserAppointmentResource;
 use App\Http\Resources\UsersResource;
 use App\Models\Barber;
 use App\Models\User;
+use App\Models\UserAppointment;
 use App\Models\UserFavorite;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -88,6 +90,16 @@ class UsersController extends Controller
             ]);
             // Retorne uma resposta adequada, se necessário
         }
+    }
+
+    public function getAppointments($user)
+    {
+
+        $appointments = UserAppointment::with('barber', 'barberService')
+            ->where('user_id', $user)
+            ->get();
+
+        return UserAppointmentResource::collection($appointments);
     }
 
     /**
