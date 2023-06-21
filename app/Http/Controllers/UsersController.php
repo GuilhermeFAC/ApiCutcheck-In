@@ -83,14 +83,14 @@ class UsersController extends Controller
             // O registro já existe, então remova-o
             $existingFavorite->delete();
             // Retorne uma resposta adequada, se necessário
-            return ['message' => 'Retirado dos favoritos'];
+            return $this->sucess(['message' => 'Retirado dos favoritos']);
         } else {
             // O registro não existe, então crie um novo registro
             UserFavorite::create([
                 'user_id' => $userId,
                 'barber_id' => $barberId,
             ]);
-            return ['message' => 'Adicionado aos favoritos'];
+            return $this->sucess(['message' => 'Adicionado aos favoritos']);
             // Retorne uma resposta adequada, se necessário
         }
     }

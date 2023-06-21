@@ -146,6 +146,21 @@ class BarbersController extends Controller
         return UserAppointmentResource::collection($appointments);
     }
 
+    public function deleteAppointment($appointmentId)
+{
+    $appointment = UserAppointment::find($appointmentId);
+
+    if (!$appointment) {
+        return $this->error('','Check-in não encontrado', 404);
+    }
+
+    $appointment->delete();
+
+    return $this->sucess([
+        'message' => 'Check-in Cancelado',
+    ]);
+}
+
     /**
      * Remove the specified resource from storage.
      */

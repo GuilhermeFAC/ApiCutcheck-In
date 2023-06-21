@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/barbers/services/{serviceId}', [BarbersController::class, 'destroyaService']); //ok
     Route::post('/barbers/{barber}/appointments', [BarbersController::class, 'setAppointments']); //ok
     Route::get('/barbers/{barber}/appointments', [BarbersController::class, 'getAppointmentsBarbers'])->name('users.getAppointments'); //ok
-    Route::get('/barbers/search', [BarbersController::class, 'search']);
+    Route::delete('/barbers/appointments/{appointmentId}',[BarbersController::class, 'deleteAppointment']);//ok
 
     Route::apiResource('/users', UsersController::class);
     Route::get('/users/{user}/favorites', [UsersController::class, 'getFavorites']); //ok
